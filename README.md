@@ -83,12 +83,12 @@ local_music_player/├── lib/│   ├── core/│   │   ├── audi
 ---
 
 ## 🔍 Search Screen
-<img src="images/search.png" width="300" />
+<img src="images/search.jpeg" width="300" />
 
 ___
 
 ## 🎥 Demo
-<video src="images/vedio.mp4" width="350" autoplay loop muted></video>
+<video src="images/video.mp4" width="350" autoplay loop muted></video>
 ---
 
 ## ⚙️ Permissions (Android)
