@@ -41,7 +41,43 @@ flutter run -d androidflutter run -d iosflutter run -d chromeflutter run -d maco
 ## 📁 Project Structure
 
 ```
-local_music_player/├── lib/│   ├── core/│   │   ├── audio_handler/│   │   ├── router/│   │   │   └── app_router.dart│   │   └── theme/│   │       └── app_themes.dart│   ├── cubits/│   │   ├── home/│   │   │   ├── songs_cubit.dart│   │   │   └── song_state.dart│   │   ├── player/│   │   │   ├── player_cubit.dart│   │   │   └── player_state.dart│   │   └── theme/│   │       └── theme_cubit.dart│   ├── database/│   │   └── db_helper.dart│   ├── models/│   │   └── song_model.dart│   ├── screens/│   │   ├── home_screen.dart│   │   └── player_screen.dart│   ├── widgets/│   │   ├── play_pause_button.dart│   │   ├── play_pause_widget.dart│   │   └── seek_bar.dart│   └── main.dart├── images/├── android/├── ios/├── macos/├── windows/├── linux/├── web/└── pubspec.yaml
+local_music_player/
+├── lib/
+│   ├── core/
+│   │   ├── audio_handler/
+│   │   ├── router/
+│   │   │   └── app_router.dart
+│   │   └── theme/
+│   │       └── app_themes.dart
+│   ├── cubits/
+│   │   ├── home/
+│   │   │   ├── songs_cubit.dart
+│   │   │   └── song_state.dart
+│   │   ├── player/
+│   │   │   ├── player_cubit.dart
+│   │   │   └── player_state.dart
+│   │   └── theme/
+│   │       └── theme_cubit.dart
+│   ├── database/
+│   │   └── db_helper.dart
+│   ├── models/
+│   │   └── song_model.dart
+│   ├── screens/
+│   │   ├── home_screen.dart
+│   │   └── player_screen.dart
+│   ├── widgets/
+│   │   ├── play_pause_button.dart
+│   │   ├── play_pause_widget.dart
+│   │   └── seek_bar.dart
+│   └── main.dart
+├── images/
+├── android/
+├── ios/
+├── macos/
+├── windows/
+├── linux/
+├── web/
+└── pubspec.yaml
 ```
 
 ---
