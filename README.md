@@ -125,6 +125,7 @@ ___
 
 ## 🎥 Demo
 <video src="images/video.mp4" width="350" autoplay loop muted></video>
+
 ---
 
 ## ⚙️ Permissions (Android)
