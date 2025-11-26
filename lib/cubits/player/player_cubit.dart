@@ -21,6 +21,7 @@ class PlayerCubit extends Cubit<local_state.PlayerState> {
     ));
 
     await _player.setFilePath(path);
+    _player.play();
 
     _player.durationStream.listen((duration) {
       if (duration != null) emit(state.copyWith(totalDuration: duration));
