@@ -9,18 +9,39 @@ class PlayPauseButton extends StatelessWidget {
     super.key,
     required this.isPlaying,
     required this.onPressed,
-    this.size = 60,
+    this.size = 70,
   });
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      iconSize: size,
-      icon: Icon(
-        isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-        color: Colors.deepPurple,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+            colors: isPlaying
+                ? [Colors.deepPurple, Colors.purpleAccent]
+                : [Colors.deepPurple.shade200, Colors.deepPurple.shade400],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Icon(
+          isPlaying ? Icons.pause : Icons.play_arrow,
+          color: Colors.white,
+          size: size * 0.6,
+        ),
       ),
-      onPressed: onPressed,
     );
   }
 }

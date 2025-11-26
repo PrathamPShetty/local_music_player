@@ -4,12 +4,18 @@ class SeekBar extends StatelessWidget {
   final Duration currentPosition;
   final Duration totalDuration;
   final ValueChanged<Duration> onSeek;
+  final Color progressBarColor;
+  final Color backgroundBarColor;
+  final Color handleColor;
 
   const SeekBar({
     super.key,
     required this.currentPosition,
     required this.totalDuration,
     required this.onSeek,
+    this.progressBarColor = Colors.deepPurple,
+    this.backgroundBarColor = Colors.deepPurpleAccent,
+    this.handleColor = Colors.white,
   });
 
   @override
@@ -21,22 +27,51 @@ class SeekBar extends StatelessWidget {
 
     return Column(
       children: [
-        Slider(
-          value: progress.clamp(0.0, 1.0),
-          onChanged: (value) {
-            final position = totalDuration * value;
-            onSeek(position);
-          },
-          activeColor: Colors.deepPurple,
-          inactiveColor: Colors.deepPurple.shade100,
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            activeTrackColor: progressBarColor,
+            inactiveTrackColor: backgroundBarColor.withOpacity(0.3),
+            trackHeight: 6,
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+            thumbColor: handleColor,
+            overlayColor: handleColor.withOpacity(0.2),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 18),
+          ),
+          child: Slider(
+            value: progress.clamp(0.0, 1.0),
+            onChanged: (value) {
+              final position = totalDuration * value;
+              onSeek(position);
+            },
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 4.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_formatDuration(currentPosition)),
-              Text(_formatDuration(totalDuration)),
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0),
+                child: Text(
+                  _formatDuration(currentPosition),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4.0),
+                child: Text(
+                  _formatDuration(totalDuration),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
