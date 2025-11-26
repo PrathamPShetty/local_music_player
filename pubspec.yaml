@@ -48,6 +48,7 @@ dependencies:
   sqflite: ^2.4.2
   path: ^1.9.1
   shared_preferences: ^2.5.3
+  flutter_launcher_icons: ^0.14.4
 
 
 dev_dependencies:
@@ -72,10 +73,16 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+
   # To add assets to your application, add an assets section, like this:
   assets:
      - images/music.png
-
+flutter_launcher_icons:
+  android: "launcher_icon" # Or true to use default filename
+  ios: true
+  image_path: "images/music.png" # Path to your icon image
+  min_sdk_android: 21 # Minimum Android SDK version supported by your app
+  remove_alpha_ios: true
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -102,3 +109,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+# Recommended for iOS icons

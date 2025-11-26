@@ -14,6 +14,13 @@ class PlayPauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    // Use theme colors for gradient
+    final gradientColors = isPlaying
+        ? [theme.primaryColor, theme.colorScheme.secondary]
+        : [theme.primaryColor.withOpacity(0.6), theme.colorScheme.secondary.withOpacity(0.6)];
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -22,15 +29,13 @@ class PlayPauseButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: LinearGradient(
-            colors: isPlaying
-                ? [Colors.deepPurple, Colors.purpleAccent]
-                : [Colors.deepPurple.shade200, Colors.deepPurple.shade400],
+            colors: gradientColors,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26,
+              color: theme.shadowColor.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),

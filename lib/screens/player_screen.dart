@@ -4,6 +4,8 @@ import '../cubits/player/player_cubit.dart';
 import '../cubits/player/player_state.dart';
 import 'package:local_music_player/widgets/play_pause_button.dart';
 import 'package:local_music_player/widgets/seek_bar.dart';
+import '../cubits/theme/theme_cubit.dart';
+import '../core/theme/app_themes.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String filePath;
@@ -22,12 +24,52 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [theme.primaryColor, theme.primaryColor.withOpacity(0.7)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        title: Text(
+          "Now Playing",
+          style: theme.textTheme.titleLarge?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(Icons.color_lens, color: theme.appBarTheme.foregroundColor),
+            onSelected: (value) {
+              context.read<ThemeCubit>().setTheme(value);
+            },
+            itemBuilder: (context) => AppThemes.themes.keys.map((key) {
+              return PopupMenuItem(
+                value: key,
+                child: Text(
+                  key.toUpperCase(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+        elevation: 6,
+        shadowColor: Colors.black38,
+      ),
+
       // ---------------- GRADIENT BACKGROUND ----------------
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade700, Colors.deepPurple.shade200],
+            colors: [
+              theme.primaryColor.withOpacity(0.8),
+              theme.primaryColor.withOpacity(0.4)
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -44,7 +86,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       width: 250,
                       height: 250,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.1),
+                        color: theme.cardColor.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
@@ -62,7 +104,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           fit: BoxFit.cover,
                         ),
                       )
-                          : const Icon(Icons.music_note, size: 120, color: Colors.white70),
+                          : Icon(
+                        Icons.music_note,
+                        size: 120,
+                        color: theme.textTheme.bodyLarge?.color?.withOpacity(0.6),
+                      ),
                     ),
 
                     const SizedBox(height: 24),
@@ -70,19 +116,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     // ---------------- SONG TITLE & ARTIST ----------------
                     Text(
                       state.title,
-                      style: const TextStyle(
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: theme.textTheme.titleLarge?.color ?? Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       state.artist,
-                      style: TextStyle(
+                      style: theme.textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
-                        color: Colors.white.withOpacity(0.8),
+                        color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8) ?? Colors.white70,
                       ),
                     ),
 
@@ -104,9 +150,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         currentPosition: state.currentPosition,
                         totalDuration: state.totalDuration,
                         onSeek: (position) => context.read<PlayerCubit>().seek(position),
-                        progressBarColor: Colors.white,
-                        backgroundBarColor: Colors.white38,
-                        handleColor: Colors.deepPurpleAccent,
+                        progressBarColor: theme.colorScheme.secondary,
+                        backgroundBarColor: theme.colorScheme.secondary.withOpacity(0.4),
+                        handleColor: theme.colorScheme.secondary,
                       ),
                     ),
                   ],

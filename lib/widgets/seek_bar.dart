@@ -4,22 +4,24 @@ class SeekBar extends StatelessWidget {
   final Duration currentPosition;
   final Duration totalDuration;
   final ValueChanged<Duration> onSeek;
-  final Color progressBarColor;
-  final Color backgroundBarColor;
-  final Color handleColor;
+  final Color? progressBarColor;
+  final Color? backgroundBarColor;
+  final Color? handleColor;
 
   const SeekBar({
     super.key,
     required this.currentPosition,
     required this.totalDuration,
     required this.onSeek,
-    this.progressBarColor = Colors.deepPurple,
-    this.backgroundBarColor = Colors.deepPurpleAccent,
-    this.handleColor = Colors.white,
+    this.progressBarColor,
+    this.backgroundBarColor,
+    this.handleColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     double progress = 0;
     if (totalDuration.inMilliseconds > 0) {
       progress = currentPosition.inMilliseconds / totalDuration.inMilliseconds;
@@ -29,12 +31,12 @@ class SeekBar extends StatelessWidget {
       children: [
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            activeTrackColor: progressBarColor,
-            inactiveTrackColor: backgroundBarColor.withOpacity(0.3),
+            activeTrackColor: progressBarColor ?? theme.primaryColor,
+            inactiveTrackColor: (backgroundBarColor ?? theme.primaryColor.withOpacity(0.3)).withOpacity(0.4),
             trackHeight: 6,
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
-            thumbColor: handleColor,
-            overlayColor: handleColor.withOpacity(0.2),
+            thumbColor: handleColor ?? theme.colorScheme.secondary,
+            overlayColor: (handleColor ?? theme.colorScheme.secondary).withOpacity(0.2),
             overlayShape: const RoundSliderOverlayShape(overlayRadius: 18),
           ),
           child: Slider(
@@ -50,26 +52,20 @@ class SeekBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: Text(
-                  _formatDuration(currentPosition),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white70,
-                    fontWeight: FontWeight.w500,
-                  ),
+              Text(
+                _formatDuration(currentPosition),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 4.0),
-                child: Text(
-                  _formatDuration(totalDuration),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white70,
-                    fontWeight: FontWeight.w500,
-                  ),
+              Text(
+                _formatDuration(totalDuration),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
                 ),
               ),
             ],

@@ -13,13 +13,13 @@ class ThemeState {
 class ThemeCubit extends Cubit<ThemeState> {
   static const String _prefKey = "selected_theme";
 
-  ThemeCubit() : super(ThemeState(themeKey: 'white', themeData: AppThemes.themes['white']!)) {
+  ThemeCubit() : super(ThemeState(themeKey: 'purple', themeData: AppThemes.themes['purple']!)) {
     loadTheme();
   }
 
   Future<void> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedKey = prefs.getString(_prefKey) ?? 'white';
+    final savedKey = prefs.getString(_prefKey) ?? 'purple';
     emit(ThemeState(themeKey: savedKey, themeData: AppThemes.themes[savedKey]!));
   }
 

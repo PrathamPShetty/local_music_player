@@ -11,24 +11,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.deepPurple, Colors.purpleAccent],
+              colors: [theme.primaryColor, theme.primaryColor.withOpacity(0.7)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
         ),
-        title: const Text(
+        title: Text(
           "Local Music Player",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+          style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
         ),
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.color_lens),
+            icon: Icon(Icons.color_lens, color: theme.appBarTheme.foregroundColor),
             onSelected: (value) {
               context.read<ThemeCubit>().setTheme(value);
             },
@@ -52,8 +54,8 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           context.read<SongCubit>().pickSong(context);
         },
-        backgroundColor: Colors.deepPurple,
-        child: const Icon(Icons.add, size: 32),
+        backgroundColor: theme.floatingActionButtonTheme.backgroundColor,
+        child: Icon(Icons.add, size: 32, color: theme.primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white),
         elevation: 6,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -75,24 +77,25 @@ class HomeScreen extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                     hintText: "Search songs...",
-                    prefixIcon: const Icon(Icons.search, color: Colors.deepPurple),
+                    prefixIcon: Icon(Icons.search, color: theme.primaryColor),
                     filled: true,
-                    fillColor: Colors.deepPurple.withOpacity(0.05),
+                    fillColor: theme.primaryColor.withOpacity(0.05),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
                     ),
                   ),
+                  style: theme.textTheme.bodyMedium,
                 ),
               ),
 
               // ---------------- SONG LIST ----------------
               Expanded(
                 child: state.filteredSongs.isEmpty
-                    ? const Center(
+                    ? Center(
                   child: Text(
                     "No songs found",
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                    style: theme.textTheme.bodyLarge?.copyWith(color: Colors.grey),
                   ),
                 )
                     : ListView.builder(
@@ -108,16 +111,16 @@ class HomeScreen extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        leading: const Icon(Icons.music_note, size: 32, color: Colors.deepPurple),
+                        leading: Icon(Icons.music_note, size: 32, color: theme.primaryColor),
                         title: Text(
                           song.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
                           song.artist,
-                          style: const TextStyle(color: Colors.grey),
+                          style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
                         ),
-                        trailing: const Icon(Icons.play_arrow, color: Colors.deepPurple),
+                        trailing: Icon(Icons.play_arrow, color: theme.primaryColor),
                         onTap: () {
                           context.read<SongCubit>().openSong(context, song);
                         },
